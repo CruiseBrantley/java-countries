@@ -11,16 +11,28 @@ import java.util.ArrayList;
 @RequestMapping("/names")
 public class NamesController
 {
-    @RequestMapping("/begin")
-    public ArrayList<Country> getCountryDetail(@RequestParam(value="letter") String a)
-    {
-        return JavacountriesApplication.countryList.findCountries( e -> (e.getName().toLowerCase().startsWith(a.toLowerCase())));
-    }
-
     @RequestMapping("/all")
     public ArrayList<Country> getAllCountries()
     {
-        JavacountriesApplication.countryList.countryList.sort((e1, e2) -> e1.getName().compareToIgnoreCase(e2.getName()));
+        JavacountriesApplication.countryList.countryList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
         return JavacountriesApplication.countryList.countryList;
+    }
+
+    @RequestMapping("/begin")
+    public ArrayList<Country> getCountryBeginsWith(@RequestParam(value="letter") String l)
+    {
+        return JavacountriesApplication.countryList.findCountries( c -> (c.getName().toLowerCase().startsWith(l.toLowerCase())));
+    }
+
+    @RequestMapping("/size")
+    public ArrayList<Country> getCountryDetail(@RequestParam(value="letters") int l)
+    {
+        ArrayList<Country> tempList = JavacountriesApplication.countryList.findCountries( c -> (c.getName().length() >= l));
+        if ((tempList != null) && (tempList.size() > 1))
+        {
+            tempList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
+            return tempList;
+        }
+        return tempList;
     }
 }
