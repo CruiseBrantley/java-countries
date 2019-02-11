@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 
-//localhost:8080/data/allcountries
+//localhost:8080/names/
 @RestController
 @RequestMapping("/names")
 public class NamesController
@@ -27,12 +27,6 @@ public class NamesController
     @RequestMapping("/size")
     public ArrayList<Country> getCountryDetail(@RequestParam(value="letters") int l)
     {
-        ArrayList<Country> tempList = JavacountriesApplication.countryList.findCountries( c -> (c.getName().length() >= l));
-        if ((tempList != null) && (tempList.size() > 1))
-        {
-            tempList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
-            return tempList;
-        }
-        return tempList;
+        return JavacountriesApplication.countryList.findCountries( c -> (c.getName().length() >= l));
     }
 }

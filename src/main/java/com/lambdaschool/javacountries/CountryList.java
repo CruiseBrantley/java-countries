@@ -232,6 +232,7 @@ public class CountryList
                 tempCountryList.add(c);
             }
         }
-        return tempCountryList.isEmpty() ? null : tempCountryList;
+        tempCountryList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
+        return tempCountryList;
     }
 }
